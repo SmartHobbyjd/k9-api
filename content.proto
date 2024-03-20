@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package contentpb;
+
+option go_package = "/;contentpb";
+import "google/protobuf/empty.proto"; // Import Empty message
+
+// This message represents a single piece of content on the page.
+message Content {
+  int64 id = 1; // Unique identifier for the content.
+  string title = 2; // Title of the content.
+  string body = 3; // Body of the content, can be formatted text or HTML.
+  int64 created_at = 4; // Timestamp of content creation in Unix epoch time (milliseconds).
+  int64 updated_at = 5; // Timestamp of last update in Unix epoch time (milliseconds).
+  
+  // Types of images supported by the content.
+  enum ImageType {
+    UNKNOWN = 0;
+    THUMBNAIL = 1;
+    BANNER = 2;
+  }
+  
+  // Information about an image associated with the content.
+  message Image {
+    string url = 1; // URL of the image.
+    string filename = 2; // Optional filename of the image on the server (if stored locally).
+    ImageType type = 3; // Type of the image (e.g., thumbnail, banner).
+  }
+  
+  repeated Image images = 6; // List of images associated with the content.
+}
+
+// This service defines methods for managing content.
+service ContentService {
+  // RPC to create a new content.
+  rpc CreateContent (Content) returns (Content);
+
+  // RPC to get a content by its ID.
+  rpc GetContent (GetContentRequest) returns (Content);
+
+  // RPC to update an existing content.
+  rpc UpdateContent (Content) returns (Content);
+
+  // RPC to delete a content by its ID.
+  rpc DeleteContent (DeleteContentRequest) returns (google.protobuf.Empty);
+}
+
+// Request message for GetContent RPC.
+message GetContentRequest {
+  int64 id = 1;
+}
+
+// Request message for DeleteContent RPC.
+message DeleteContentRequest {
+  int64 id = 1;
+}
+
+// Empty message used for RPCs that don't return any data.
+message Empty {}
