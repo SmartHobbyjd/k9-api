@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package contentpb;
 
-option go_package = "contentpb/;contentpb";
+option go_package = "/;contentpb";
 import "google/protobuf/empty.proto"; // Import Empty message
 
 // This message represents a single piece of content on the page.

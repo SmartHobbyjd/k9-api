@@ -7,7 +7,7 @@ import (
 	"log"
 	"net"
 
-	pb "contentpb"
+	pb "github.com/SmartHobbyjd/k9-api/contentpb"
 
 	_ "github.com/mattn/go-sqlite3"
 	"google.golang.org/grpc"
